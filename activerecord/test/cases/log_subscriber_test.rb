@@ -178,6 +178,13 @@ class LogSubscriberTest < ActiveRecord::TestCase
 
     logger = TestDebugLogSubscriber.new
     logger.sql(Event.new(0, sql: "hi mom!"))
+    
+    puts "/n"
+    @logger.logged(:debug).each_with_index do |log, i|
+      puts "#{i}: #{log}"
+    end
+    puts "/n"
+
     assert_equal 2, @logger.logged(:debug).size
     assert_match(/↳/, @logger.logged(:debug).last)
   ensure
