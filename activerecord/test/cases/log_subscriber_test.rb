@@ -174,6 +174,8 @@ class LogSubscriberTest < ActiveRecord::TestCase
   end
 
   def test_vebose_query_logs
+    puts "test_vebose_query_logs"
+
     $debugger = true
 
     ActiveRecord::Base.verbose_query_logs = true
