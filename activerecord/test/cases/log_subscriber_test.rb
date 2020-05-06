@@ -174,11 +174,13 @@ class LogSubscriberTest < ActiveRecord::TestCase
   end
 
   def test_vebose_query_logs
+    $debugger = true
+
     ActiveRecord::Base.verbose_query_logs = true
 
     logger = TestDebugLogSubscriber.new
     logger.sql(Event.new(0, sql: "hi mom!"))
-    
+
     puts "/n"
     @logger.logged(:debug).each_with_index do |log, i|
       puts "#{i}: #{log}"
@@ -189,6 +191,8 @@ class LogSubscriberTest < ActiveRecord::TestCase
     assert_match(/↳/, @logger.logged(:debug).last)
   ensure
     ActiveRecord::Base.verbose_query_logs = false
+
+    $debugger = false
   end
 
   def test_verbose_query_with_ignored_callstack
