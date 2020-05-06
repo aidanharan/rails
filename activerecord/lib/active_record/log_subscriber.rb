@@ -104,7 +104,7 @@ module ActiveRecord
       def log_query_source
         source = extract_query_source_location(caller)
 
-        binding.pry
+        binding.irb
 
         if source
           logger.debug("  ↳ #{source}")
