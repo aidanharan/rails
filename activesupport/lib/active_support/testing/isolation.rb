@@ -68,6 +68,9 @@ module ActiveSupport
         def run_in_isolation(&blk)
           require "tempfile"
 
+          outputs = ["run_in_isolation"]
+
+
           if ENV["ISOLATION_TEST"]
             yield
             test_result = defined?(Minitest::Result) ? Minitest::Result.from(self) : dup
@@ -89,6 +92,14 @@ module ActiveSupport
                 load_path_args << "-I"
                 load_path_args << File.expand_path(p)
               end
+
+              outputs << "env=#{env}"
+              outputs << "load_path_args.length=#{load_path_args.length}"
+              outputs << "$0=#{$0}"
+              outputs << "ORIG_ARGV.length=#{ORIG_ARGV.length}"
+              outputs << "test_opts=#{test_opts}"
+
+              puts outputs.join("\n")
 
               child = IO.popen([env, Gem.ruby, *load_path_args, $0, *ORIG_ARGV, test_opts])
 
