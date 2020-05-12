@@ -95,8 +95,10 @@ module ActiveSupport
 
               outputs << "env=#{env}"
               outputs << "load_path_args.length=#{load_path_args.length}"
+              outputs << "load_path_args=#{load_path_args}"
               outputs << "$0=#{$0}"
               outputs << "ORIG_ARGV.length=#{ORIG_ARGV.length}"
+              outputs << "ORIG_ARGV=#{ORIG_ARGV}"
               outputs << "test_opts=#{test_opts}"
 
               puts outputs.join("\n")
