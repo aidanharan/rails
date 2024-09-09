@@ -1291,7 +1291,7 @@ module ActiveRecord
       end
 
       def check_constraint_options(table_name, expression, options) # :nodoc:
-        options = options.dup
+        options = options.slice(:name, :validate)
         options[:name] ||= check_constraint_name(table_name, expression: expression, **options)
         options
       end
@@ -1312,6 +1312,7 @@ module ActiveRecord
       def remove_check_constraint(table_name, expression = nil, if_exists: false, **options)
         return unless supports_check_constraints?
 
+        options = check_constraint_options(table_name, expression, options)
         return if if_exists && !check_constraint_exists?(table_name, **options)
 
         chk_name_to_delete = check_constraint_for!(table_name, expression: expression, **options).name

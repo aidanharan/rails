@@ -307,6 +307,17 @@ if ActiveRecord::Base.lease_connection.supports_check_constraints?
 
           assert_equal 0, @connection.check_constraints("trades").size
         end
+
+        def test_add_and_remove_constraint_with_invalid_options
+          @connection.add_check_constraint :trades, "price > 0", name: "price_check", invalid_option: true
+          assert @connection.check_constraint_exists?(:trades, name: "price_check")
+
+          assert_nothing_raised do
+            @connection.remove_check_constraint :trades, name: "price_check", invalid_option: true
+          end
+
+          assert_not @connection.check_constraint_exists?(:trades, name: "price_check")
+        end
       end
     end
   end
