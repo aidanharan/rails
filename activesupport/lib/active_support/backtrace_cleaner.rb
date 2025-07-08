@@ -131,20 +131,21 @@ module ActiveSupport
       #
       # Frames are strings.
       def first_clean_frame(kind = :silent)
-        # puts "2.first_clean_frame"
+        puts "2.first_clean_frame"
 
         Thread.each_caller_location(2) do |location|
 
 
 
+          
 
 
           frame = clean_frame(location, kind) unless location.to_s.match?(/activerecord/)
 
-          # puts ""
-          # puts "location: #{location.inspect}"
-          # puts "frame: #{frame.inspect}"
-          # puts ""
+          puts ""
+          puts "location: #{location.inspect}"
+          puts "frame: #{frame.inspect}"
+          puts ""
 
           return frame if frame
         end
