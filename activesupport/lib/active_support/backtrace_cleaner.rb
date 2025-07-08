@@ -218,7 +218,7 @@ module ActiveSupport
       end
 
       def add_gem_silencer
-        add_silencer { |line| FORMATTED_GEMS_PATTERN.match?(line) && !/rails/.match?(line) }
+        add_silencer { |line| FORMATTED_GEMS_PATTERN.match?(line) && !/activerecord/.match?(line) }
       end
 
       def add_stdlib_silencer
