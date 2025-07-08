@@ -199,6 +199,9 @@ module AssociationDeprecationTest
       error = assert_raises(ActiveRecord::DeprecatedAssociationError) { DATS::Car.new.deprecated_tyres }
 
       assert_message error.message, line
+
+      binding.pry
+
       assert_includes error.backtrace.last, "#{__FILE__}:#{line}:in"
     end
   end
