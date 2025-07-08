@@ -210,7 +210,15 @@ module ActiveSupport
 
         gems_regexp = %r{\A(#{gems_paths.join('|')})/(bundler/)?gems/([^/]+)-([\w.]+)/(.*)}
         gems_result = '\3 (\4) \5'
-        add_filter { |line| line.sub(gems_regexp, gems_result) }
+
+        add_filter do |line|
+          if line.match?(/activerecord/)
+            line
+          else
+            line.sub(gems_regexp, gems_result)
+          end
+
+        end
       end
 
       def add_core_silencer
