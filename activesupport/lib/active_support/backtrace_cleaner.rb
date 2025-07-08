@@ -92,7 +92,7 @@ module ActiveSupport
       #
       # Frames are strings.
       def first_clean_frame(kind = :silent)
-        puts "1.first_clean_frame"
+        # puts "1.first_clean_frame"
 
         caller_location_skipped = false
 
@@ -130,7 +130,7 @@ module ActiveSupport
       #
       # Frames are strings.
       def first_clean_frame(kind = :silent)
-        puts "2.first_clean_frame"
+        # puts "2.first_clean_frame"
 
         Thread.each_caller_location(2) do |location|
 
@@ -139,10 +139,10 @@ module ActiveSupport
 
           frame = clean_frame(location, kind)
 
-          puts ""
-          puts "location: #{location.inspect}"
-          puts "frame: #{frame.inspect}"
-          puts ""
+          # puts ""
+          # puts "location: #{location.inspect}"
+          # puts "frame: #{frame.inspect}"
+          # puts ""
 
           return frame if frame
         end
@@ -205,7 +205,7 @@ module ActiveSupport
         gems_paths = (Gem.path | [Gem.default_dir]).map { |p| Regexp.escape(p) }
         return if gems_paths.empty?
 
-        binding.pry if $AIDO
+        binding.pry
 
         gems_regexp = %r{\A(#{gems_paths.join('|')})/(bundler/)?gems/([^/]+)-([\w.]+)/(.*)}
         gems_result = '\3 (\4) \5'
