@@ -138,7 +138,8 @@ module ActiveSupport
 
 
 
-          frame = clean_frame(location, kind)
+
+          frame = clean_frame(location, kind) unless location.match?(/activerecord/)
 
           # puts ""
           # puts "location: #{location.inspect}"
@@ -212,11 +213,11 @@ module ActiveSupport
         gems_result = '\3 (\4) \5'
 
         add_filter do |line|
-          if line.match?(/activerecord/)
-            line
-          else
+          # if line.match?(/activerecord/)
+          #   line
+          # else
             line.sub(gems_regexp, gems_result)
-          end
+          # end
 
         end
       end
@@ -226,7 +227,9 @@ module ActiveSupport
       end
 
       def add_gem_silencer
-        add_silencer { |line| FORMATTED_GEMS_PATTERN.match?(line) && !/activerecord/.match?(line) }
+        add_silencer do |line|
+          FORMATTED_GEMS_PATTERN.match?(line) #&& !/activerecord/.match?(line)
+        end
       end
 
       def add_stdlib_silencer
