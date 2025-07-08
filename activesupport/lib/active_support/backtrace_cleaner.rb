@@ -138,7 +138,7 @@ module ActiveSupport
 
 
 
-          frame = if location.to_s.match?(/activerecord/)
+          frame = if location.to_s.match?(/activerecord\/test/)
                     location.to_s.split(" ").first
                   else
                     clean_frame(location, kind)
