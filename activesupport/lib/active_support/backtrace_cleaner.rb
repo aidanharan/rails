@@ -139,7 +139,7 @@ module ActiveSupport
 
 
 
-          frame = clean_frame(location, kind) unless location.match?(/activerecord/)
+          frame = clean_frame(location, kind) unless location.to_s.match?(/activerecord/)
 
           # puts ""
           # puts "location: #{location.inspect}"
