@@ -22,7 +22,10 @@ module Erb # :nodoc:
           end
         end
 
-        template "partial.html.erb", File.join("app/views", controller_file_path, "_#{singular_name}.html.erb")
+        puts "controller_file_path: #{controller_file_path.inspect}"
+        puts "singular_name: #{singular_name.inspect}"
+
+        template "partial.html.erb", File.join("app/views", controller_file_path, "_#{singular_controller_file_name}.html.erb")
       end
 
     private

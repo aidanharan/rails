@@ -24,7 +24,14 @@ module TestUnit # :nodoc:
                  File.join("test/controllers", controller_class_path, "#{controller_file_name}_controller_test.rb")
 
         if !options.api? && options[:system_tests]
-          template "system_test.rb", File.join("test/system", class_path, "#{file_name.pluralize}_test.rb")
+
+          # aido
+          puts "ScaffoldGenerator: file_name: #{file_name.inspect}"
+          puts "ScaffoldGenerator: class_path: #{class_path.inspect}"
+          puts "ScaffoldGenerator: controller_file_path: #{controller_file_path.inspect}"
+          puts "ScaffoldGenerator: controller_file_name: #{controller_file_name.inspect}"
+
+          template "system_test.rb", File.join("test/system", "#{controller_file_path}_test.rb")
         end
       end
 

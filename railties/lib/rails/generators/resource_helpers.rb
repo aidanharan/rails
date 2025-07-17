@@ -41,6 +41,18 @@ module Rails
           @controller_class_path = name.include?("/") ? name.split("/") : name.split("::")
           @controller_class_path.map!(&:underscore)
           @controller_file_name = @controller_class_path.pop
+
+          # puts "Controller class path: #{@controller_class_path.inspect}"
+          # puts "Controller file name: #{@controller_file_name.inspect}"
+
+        end
+
+        def plural_controller_file_name
+          @plural_controller_file_name ||= controller_file_name.pluralize
+        end
+
+        def singular_controller_file_name
+          @singular_controller_file_name ||= controller_file_name.singularize
         end
 
         def controller_file_path

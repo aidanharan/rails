@@ -102,12 +102,52 @@ module Rails
           "#{singular_route_name}_#{type}(#{arg})"
         end
 
-        def edit_helper(...) # :doc:
-          "edit_#{show_helper(...)}"
+        def show_route_helper(arg = "@#{singular_table_name}", type: :url) # :doc:
+          if options[:model_name]
+            "#{singular_route_name}_#{type}(#{arg})"
+          else
+            arg
+          end
+
+
+        end
+
+        def create_helper(...) # :doc:
+          index_helper(...)
+        end
+
+        def destroy_route_helper(...)
+          show_route_helper(...)
+        end
+
+        def edit_helper(arg = "@#{singular_table_name}", type: :url) # :doc:
+
+          "edit_#{singular_route_name}_#{type}(#{arg})"
+
+          # "edit_#{show_helper(...)}"
         end
 
         def new_helper(type: :url) # :doc:
           "new_#{singular_route_name}_#{type}"
+        end
+
+        def form_helper(...)
+
+          if options[:model_name]
+            "model: #{model_resource_name}, url: #{create_helper(...)}"
+          else
+            "model: #{model_resource_name}"
+          end
+
+        end
+
+        # aido
+        def render_model_helper(prefix: "") # :doc:
+          if options[:model_name]
+            "\"#{singular_controller_file_name}\", #{singular_table_name}: #{prefix}#{singular_table_name}"
+          else
+            "#{prefix}#{singular_table_name}"
+          end
         end
 
         def singular_table_name # :doc:
@@ -127,7 +167,12 @@ module Rails
         end
 
         def route_url # :doc:
-          @route_url ||= controller_class_path.collect { |dname| "/" + dname }.join + "/" + plural_file_name
+
+          # puts "plural_file_name: #{plural_file_name}"
+          # puts "controller_file_name: #{controller_file_name}"
+
+
+          @route_url ||= controller_class_path.collect { |dname| "/" + dname }.join + "/" + controller_file_name
         end
 
         def url_helper_prefix # :doc:
@@ -143,33 +188,57 @@ module Rails
           end
         end
 
-        def redirect_resource_name # :doc:
-          model_resource_name(prefix: "@")
+
+
+        def redirect_resource_helper # :doc:
+          if options[:model_name]
+            show_helper(type: :path)
+          else
+            model_resource_name(prefix: "@")
+          end
         end
 
         def model_resource_name(base_name = singular_table_name, prefix: "") # :doc:
           resource_name = "#{prefix}#{base_name}"
-          if options[:model_name]
-            "[#{controller_class_path.map { |name| ":" + name }.join(", ")}, #{resource_name}]"
-          else
+          # if options[:model_name] #&& controller_class_path.present?
+          #   show_helper(type: :path)
+
+            # "[#{controller_class_path.map { |name| ":" + name }.join(", ")}, #{resource_name}]"
+          # else
             resource_name
-          end
+          # end
         end
 
+        # aido
         def singular_route_name # :doc:
-          if options[:model_name]
-            "#{controller_class_path.join('_')}_#{singular_table_name}"
+          # if options[:model_name] && controller_class_path.present?
+          #   "#{controller_class_path.join('_')}_#{singular_controller_file_name}"
+          # else
+          #   singular_controller_file_name
+          # end
+
+          if controller_class_path.present?
+            "#{controller_class_path.join('_')}_#{singular_controller_file_name}"
           else
-            singular_table_name
+            singular_controller_file_name
           end
+
+
         end
 
         def plural_route_name # :doc:
-          if options[:model_name]
-            "#{controller_class_path.join('_')}_#{plural_table_name}"
+          # if options[:model_name]
+          #   "#{controller_class_path.join('_')}_#{plural_table_name}"
+          # else
+          #   plural_table_name
+          # end
+
+          if controller_class_path.present?
+            "#{controller_class_path.join('_')}_#{plural_controller_file_name}"
           else
-            plural_table_name
+            plural_controller_file_name
           end
+
         end
 
         def assign_names!(name)
