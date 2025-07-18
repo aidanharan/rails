@@ -190,7 +190,7 @@ module Rails
 
 
 
-        def redirect_resource_helper # :doc:
+        def redirect_resource_name # :doc:
           if options[:model_name]
             show_helper(type: :path)
           else
