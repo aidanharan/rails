@@ -43,6 +43,14 @@ module Rails
           @controller_file_name = @controller_class_path.pop
         end
 
+        def plural_controller_file_name
+          @plural_controller_file_name ||= controller_file_name.pluralize
+        end
+
+        def singular_controller_file_name
+          @singular_controller_file_name ||= controller_file_name.singularize
+        end
+
         def controller_file_path
           @controller_file_path ||= (controller_class_path + [controller_file_name]).join("/")
         end

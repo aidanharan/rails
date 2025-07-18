@@ -7,6 +7,6 @@
 <br>
 
 <div>
-  <%%= link_to "Show this <%= human_name.downcase %>", <%= model_resource_name(prefix: "@") %> %> |
+  <%%= link_to "Show this <%= human_name.downcase %>", <%= show_route_helper(type: :path) %> %> |
   <%%= link_to "Back to <%= human_name.pluralize.downcase %>", <%= index_helper(type: :path) %> %>
 </div>

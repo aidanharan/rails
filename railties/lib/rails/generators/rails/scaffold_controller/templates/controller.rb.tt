@@ -2,7 +2,7 @@
 class <%= controller_class_name %>Controller < ApplicationController
   before_action :set_<%= singular_table_name %>, only: %i[ show edit update destroy ]
 
-  # GET <%= route_url %>
+  # GET <%= controller_file_path %>
   def index
     @<%= plural_table_name %> = <%= orm_class.all(class_name) %>
   end
