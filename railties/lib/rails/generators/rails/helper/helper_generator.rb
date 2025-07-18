@@ -6,10 +6,6 @@ module Rails
       check_class_collision suffix: "Helper"
 
       def create_helper_files
-
-        # aido
-        puts "HelperGenerator: file_name: #{file_name.inspect}"
-
         template "helper.rb", File.join("app/helpers", class_path, "#{file_name}_helper.rb")
       end
 
