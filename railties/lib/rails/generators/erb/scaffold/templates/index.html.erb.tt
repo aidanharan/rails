@@ -6,9 +6,9 @@
 
 <div id="<%= plural_table_name %>">
   <%% @<%= plural_table_name %>.each do |<%= singular_table_name %>| %>
-    <%%= render <%= singular_table_name %> %>
+    <%%= render <%= render_model_helper %> %>
     <p>
-      <%%= link_to "Show this <%= human_name.downcase %>", <%= model_resource_name(singular_table_name) %> %>
+      <%%= link_to "Show this <%= human_name.downcase %>", <%= show_route_helper(singular_table_name, type: :path) %> %>
     </p>
   <%% end %>
 </div>
